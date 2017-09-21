@@ -1,25 +1,25 @@
 # 	Translation using Google Translate API
 #
-#	!tr <lg> Sentence
-#   lg is the destination language - will set to English if not found
+#	Usage:
+#	!tr <lg> sentence - lg (optional) is the destination language - will default to English
 
 namespace eval googleTranslate {
 	
     variable author "manavortex"
-    variable versionNum "0.2"
+    variable versionNum "0.1"
     variable versionName "googleTranslate"
 	
 	http::register https 443 [list ::tls::socket -ssl2 0 -ssl3 0 -tls1 1]
-	
+
 	bind pub - !tr googleTranslate::translate
 	
 	proc translate { nick uhost handle chan text } {
 
 		set appUrl "https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto"
 		
-		package require http
-		package require json
+		package require http 2.7
 		package require tls 1.6
+		package require json
 
 
 		#set default language 
