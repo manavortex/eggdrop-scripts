@@ -9,6 +9,8 @@ namespace eval googleTranslate {
     variable versionNum "0.2"
     variable versionName "googleTranslate"
 	
+	http::register https 443 [list ::tls::socket -ssl2 0 -ssl3 0 -tls1 1]
+	
 	bind pub - !tr googleTranslate::translate
 	
 	proc translate { nick uhost handle chan text } {
@@ -17,6 +19,8 @@ namespace eval googleTranslate {
 		
 		package require http
 		package require json
+		package require tls 1.6
+
 
 		#set default language 
 		set targetlang "en"
@@ -49,6 +53,7 @@ namespace eval googleTranslate {
 		
 		putserv "PRIVMSG $chan :$translationtext"
 	}
+
 }
 
 putlog "\002$::googleTranslate::versionName $::googleTranslate::versionNum\002 loaded"
